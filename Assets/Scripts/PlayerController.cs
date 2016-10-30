@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour {
     void Start()
     {
         //rigidbody
-        rb = GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody>();
         //audio
         audioSource = GetComponent<AudioSource>();
         // gamecontroller ref
@@ -52,6 +52,9 @@ public class PlayerController : MonoBehaviour {
         float moveVertical = CrossPlatformInputManager.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+
+//		Vector3 acceleration = Input.acceleration;
+//		Vector3 movement = new Vector3(acceleration.x, 0.0f, -acceleration.z);
         rb.velocity = movement * speed;
 
         rb.position = new Vector3
