@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UnityStandardAssets.CrossPlatformInput
 {
-    public class ButtonHandler : MonoBehaviour
+	public class ButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
 
         public string Name;
@@ -15,8 +16,18 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         void OnEnable()
         {
-
+			
         }
+
+		public void OnPointerUp(PointerEventData data) 
+		{ 
+			CrossPlatformInputManager.SetButtonUp(Name);
+		}
+
+		public void OnPointerDown(PointerEventData data) 
+		{ 
+			CrossPlatformInputManager.SetButtonDown(Name);
+		}
 
         public void SetDownState()
         {
@@ -51,5 +62,5 @@ namespace UnityStandardAssets.CrossPlatformInput
         {
 
         }
-    }
+	}
 }

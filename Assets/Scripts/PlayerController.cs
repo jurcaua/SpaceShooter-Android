@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-        if (CrossPlatformInputManager.GetButton("Shoot") && Time.time > startWait && Time.time > nextFire && gameScript.restart == false)
+		if (CrossPlatformInputManager.GetButton("Action") && Time.time > startWait && Time.time > nextFire && gameScript.restart == false)
         {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, Quaternion.Euler(0, 0, 0));
@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+		//handling movement
         float moveHorizontal = CrossPlatformInputManager.GetAxis("Horizontal");
         float moveVertical = CrossPlatformInputManager.GetAxis("Vertical");
 
@@ -65,6 +66,9 @@ public class PlayerController : MonoBehaviour {
         );
 
         rb.rotation = Quaternion.Euler(rb.velocity.z * tilty, rb.velocity.x, rb.velocity.x * -tiltx);
+
+		//handling dodging
+
     }
 
 }
