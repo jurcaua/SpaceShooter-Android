@@ -58,9 +58,10 @@ namespace UnityStandardAssets.CrossPlatformInput
             CrossPlatformInputManager.SetAxisNegative(Name);
         }
 
-        public void Update()
+        public void OnDrag()
         {
-
+			CrossPlatformInputManager.SetButtonDown(Name);
+			Debug.Log ("ended drag!");
         }
 	}
 }
