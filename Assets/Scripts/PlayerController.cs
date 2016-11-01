@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour {
     private AudioSource audioSource;
     
     private GameController gameScript;
+	private TrailRenderer trail1;
+	private TrailRenderer trail2;
 
     void Start()
     {
@@ -43,6 +45,11 @@ public class PlayerController : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         // gamecontroller ref
         gameScript = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+		// getting the two trails
+		trail1 = GameObject.Find("Trail Spawn 1").GetComponent<TrailRenderer>();
+		trail2 = GameObject.Find("Trail Spawn 2").GetComponent<TrailRenderer>();
+		trail1.enabled = false;
+		trail2.enabled = false;
     }
 
     void Update()
@@ -73,12 +80,12 @@ public class PlayerController : MonoBehaviour {
 		if (Time.time > nextDodge) {
 			if (CrossPlatformInputManager.GetButton ("LDodge")) 
 			{
-				StartCoroutine (Dodge (-dodgeForce));
+				StartCoroutine (Dodge (-dodgeForce, -rotationForce));
 			}
 
 			if (CrossPlatformInputManager.GetButton ("RDodge")) 
 			{
-				StartCoroutine (Dodge (dodgeForce));
+				StartCoroutine (Dodge (dodgeForce, rotationForce));
 			}
 		}
 
@@ -90,14 +97,16 @@ public class PlayerController : MonoBehaviour {
         );
     }
 
-	IEnumerator Dodge(float dodgeForce)
+	IEnumerator Dodge(float dodgeForce, float rotationForce)
 	{
-		rb.velocity = Vector3.zero; 							// set volecity to zero
-		cf.force = new Vector3 (dodgeForce, 0.0f, 0.0f); 	   // the dash
-		transform.Rotate (new Vector3(0, 0, -rotationForce)); // the rotation
-		yield return new WaitForSeconds(dodgeTime);		     // wait during the dodge
-		cf.force = Vector3.zero; 						    // no more dash
-		transform.rotation = Quaternion.identity; 		   // no more rotation
-		nextDodge = Time.time + dodgeRate; 			 	  // can only dodge again after the cooldown
+		trail1.enabled = true;
+		trail2.enabled = true;
+		rb.velocity = Vector3.zero; 																			// set volecity to zero
+		cf.force = new Vector3 (dodgeForce, 0.0f, 0.0f); 	   												   // the dash
+		transform.Rotate (new Vector3(0, rotationForce/3, -rotationForce)); 								  // the rotation
+		yield return new WaitForSeconds(dodgeTime);		     												 // wait during the dodge
+		cf.force = Vector3.zero; 						    												// no more dash
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.identity, 0); 		   // no more rotation
+		nextDodge = Time.time + dodgeRate; 			 	  												  // can only dodge again after the cooldown
 	}
 }
