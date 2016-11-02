@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour {
 	public float dodgeTime;
 	public float dodgeRate;
 
+	public float trailStartWidth;
+	public float trailEndtWidth;
+
     private float nextFire;
 	private float nextDodge;
     private Rigidbody rb;
@@ -46,10 +49,12 @@ public class PlayerController : MonoBehaviour {
         // gamecontroller ref
         gameScript = GameObject.FindWithTag("GameController").GetComponent<GameController>();
 		// getting the two trails
-		trail1 = GameObject.Find("Trail Spawn 1").GetComponent<TrailRenderer>();
-		trail2 = GameObject.Find("Trail Spawn 2").GetComponent<TrailRenderer>();
-		trail1.enabled = false;
-		trail2.enabled = false;
+		trail1 = GameObject.Find("Trail1").GetComponent<TrailRenderer>();
+		trail2 = GameObject.Find("Trail2").GetComponent<TrailRenderer>();
+		trail1.startWidth = 0;
+		trail1.endWidth = 0;
+		trail2.startWidth = 0;
+		trail2.endWidth = 0;
     }
 
     void Update()
@@ -60,6 +65,14 @@ public class PlayerController : MonoBehaviour {
             Instantiate(shot, shotSpawn.position, Quaternion.Euler(0, 0, 0));
             audioSource.Play();
         }
+
+		if (trail1 == null) {
+			trail1 = GameObject.Find ("Trail1").GetComponent<TrailRenderer> ();
+		}
+		if (trail2 == null) {
+			trail2 = GameObject.Find ("Trail2").GetComponent<TrailRenderer> ();
+		}
+
     }
 
     void FixedUpdate()
@@ -99,8 +112,10 @@ public class PlayerController : MonoBehaviour {
 
 	IEnumerator Dodge(float dodgeForce, float rotationForce)
 	{
-		trail1.enabled = true;
-		trail2.enabled = true;
+		trail1.startWidth = trailStartWidth;
+		trail1.endWidth = trailEndtWidth;
+		trail2.startWidth = trailStartWidth;
+		trail2.endWidth = trailEndtWidth;
 		rb.velocity = Vector3.zero; 																			// set volecity to zero
 		cf.force = new Vector3 (dodgeForce, 0.0f, 0.0f); 	   												   // the dash
 		transform.Rotate (new Vector3(0, rotationForce/3, -rotationForce)); 								  // the rotation
@@ -108,5 +123,9 @@ public class PlayerController : MonoBehaviour {
 		cf.force = Vector3.zero; 						    												// no more dash
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.identity, 0); 		   // no more rotation
 		nextDodge = Time.time + dodgeRate; 			 	  												  // can only dodge again after the cooldown
+		trail1.startWidth = 0;
+		trail1.endWidth = 0;
+		trail2.startWidth = 0;
+		trail2.endWidth = 0;
 	}
 }
