@@ -109,14 +109,19 @@ public class PlayerController : MonoBehaviour {
             0.0f,
             Mathf.Clamp(rb.position.z, boundary.zMin, boundary.zMax)
         );
+
+		trail1.startWidth = Mathf.MoveTowards(trail1.startWidth, 0, Time.deltaTime * smoothing);
+		trail1.endWidth = Mathf.MoveTowards(trail1.endWidth, 0, Time.deltaTime * smoothing);
+		trail2.startWidth = Mathf.MoveTowards(trail2.startWidth, 0, Time.deltaTime * smoothing);
+		trail2.endWidth = Mathf.MoveTowards(trail2.endWidth, 0, Time.deltaTime * smoothing);
     }
 
 	IEnumerator Dodge(float dodgeForce, float rotationForce)
 	{
-		trail1.startWidth = Mathf.MoveTowards(trailStartWidth, 0, Time.deltaTime * smoothing);
-		trail1.endWidth = Mathf.MoveTowards(trailEndWidth, 0, Time.deltaTime * smoothing);
-		trail2.startWidth = Mathf.MoveTowards(trailStartWidth, 0, Time.deltaTime * smoothing);
-		trail2.endWidth = Mathf.MoveTowards(trailEndWidth, 0, Time.deltaTime * smoothing);
+		trail1.startWidth = trailStartWidth;
+		trail1.endWidth = trailEndWidth;
+		trail2.startWidth = trailStartWidth;
+		trail2.endWidth = trailEndWidth;
 		rb.velocity = Vector3.zero; 																			// set volecity to zero
 		cf.force = new Vector3 (dodgeForce, 0.0f, 0.0f); 	   												   // the dash
 		transform.Rotate (new Vector3(0, rotationForce/3, -rotationForce)); 								  // the rotation
