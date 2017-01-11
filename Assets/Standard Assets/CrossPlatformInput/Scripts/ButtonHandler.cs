@@ -34,7 +34,6 @@ namespace UnityStandardAssets.CrossPlatformInput
             CrossPlatformInputManager.SetButtonDown(Name);
         }
 
-
         public void SetUpState()
         {
             CrossPlatformInputManager.SetButtonUp(Name);
@@ -56,12 +55,6 @@ namespace UnityStandardAssets.CrossPlatformInput
         public void SetAxisNegativeState()
         {
             CrossPlatformInputManager.SetAxisNegative(Name);
-        }
-
-        public void OnDrag()
-        {
-			CrossPlatformInputManager.SetButtonDown(Name);
-			Debug.Log ("ended drag!");
         }
 	}
 }
