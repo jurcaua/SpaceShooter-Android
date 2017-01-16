@@ -6,6 +6,10 @@ Unique firing mechanics for aimed shooting
 ## Download Link
 Download the apk [here!](https://drive.google.com/open?id=0B4-kSsqw1xmKRjh1Q3BvQzJjQWs)
 
+##**Gameplay Footage**:
+
+Here is a [YouTube link](https://www.youtube.com/watch?v=yUQojrvAw1k)!
+
 ##**Screenshots**:
 
 **Start Screen**:
